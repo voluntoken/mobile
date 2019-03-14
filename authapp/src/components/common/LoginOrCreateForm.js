@@ -66,7 +66,7 @@ class LoginOrCreateForm extends Component {
 			const { accountCreateTextStyle } = style;
 			return (
 				<Text style={accountCreateTextStyle}>
-					Or 
+					Or
 					<Text style={{ color: 'blue' }} onPress={() => Actions.register()}>
 						{' Sign-up'}
 					</Text>
@@ -117,16 +117,19 @@ class LoginOrCreateForm extends Component {
 			</View>
 		);
 	}
-	
+
 	handleRequest() {
+		// comment later
+		Actions.main();
+
 		const endpoint = this.props.create ? 'register' : 'login';
-		const payload = { username: this.state.username, password: this.state.password } 
-		
+		const payload = { username: this.state.username, password: this.state.password }
+
 		if (this.props.create) {
 			payload.first_name = this.state.firstName;
 			payload.last_name = this.state.lastName;
 		}
-		
+
 		axios
 			.post(`/auth/${endpoint}/`, payload)
 			.then(response => {
@@ -134,7 +137,7 @@ class LoginOrCreateForm extends Component {
 
 				// We set the returned token as the default authorization header
 				axios.defaults.headers.common.Authorization = `Token ${token}`;
-				
+
 				// Navigate to the home screen
 				Actions.main();
 			})
@@ -148,7 +151,7 @@ class LoginOrCreateForm extends Component {
 				<Button title={buttonText} onPress={this.handleRequest.bind(this)}/>
 			);
 		}
-		
+
 }
 
 

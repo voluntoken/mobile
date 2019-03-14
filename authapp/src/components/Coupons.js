@@ -10,7 +10,7 @@ import { Card, ListItem, Button, Icon } from 'react-native-elements'
 
 
 
-class Home extends Component {
+class Coupons extends Component {
 
 	constructor() {
 		super();
@@ -45,13 +45,13 @@ class Home extends Component {
 	//		<Text> More </Text>
 	//	</button>
 
-	goToDetail () {
-		Actions.detail_view({obj: "DFas"});
+	goToCoupon () {
+		Actions.coupon_view({obj: "DFas"});
 	}
 
 	render () {
 		let content;
-//		const goToDetail = (user) => Actions.event_detail({obj: user});
+//		const goToDetail = (user) => Actions.coupon_detail({obj: user});
 
 
 
@@ -68,7 +68,7 @@ class Home extends Component {
 					<Card key={index}>
 						<View>
 							<Text> {user.name}: {user.email} </Text>
-								<Button onPress={this.goToDetail}>
+								<Button onPress={this.goToCoupon}>
 									<Text> More </Text>
 								</Button>
 						</View>
@@ -88,4 +88,4 @@ class Home extends Component {
 }
 
 
-export default Home;
+export default Coupons;
