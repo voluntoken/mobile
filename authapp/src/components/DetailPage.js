@@ -10,11 +10,18 @@ class DetailPage extends Component {
 	render(){
 		return (
 			<View>
-				<Text> oh boy </Text>
-				<ActivityIndicator size="large" color="#0000ff" />
+				<Text> Event Detail Page </Text>
+				<Text> {this.props.obj.name} </Text>
+				<Button onPress={this.goBack}>
+					<Text> More </Text>
+				</Button>
 			</View>
 		);
-	}		
+	}
+	
+	goBack () {
+		Actions.event();
+	} 		
 }
 
 export default DetailPage;

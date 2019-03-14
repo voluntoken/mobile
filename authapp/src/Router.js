@@ -1,13 +1,12 @@
-// src/Router.js
+// src/Router.js 
 
 import React from 'react';
 import { Scene, Stack, Router, Actions } from 'react-native-router-flux';
 import Login from './components/Login';
 import Register from './components/Register';
 import Home from './components/Home';
-import Coupons from './components/Coupons';
+import Events from './components/Events';
 import DetailPage from './components/DetailPage'
-import CouponPage from './components/CouponPage'
 
 
 
@@ -46,7 +45,7 @@ const RouterComponent = () => {
 						title="Register"
 						key="register"
 						component={Register}
-					/>
+					/>  
 				</Stack>
 				<Stack
 					key="main"
@@ -55,7 +54,7 @@ const RouterComponent = () => {
 					type="reset"
 					navigationBarStyle={style.navBarStyle}
 					titleStyle={style.titleStyle}
-
+					
 					>
 					<Scene
 						title="Home"
@@ -66,12 +65,12 @@ const RouterComponent = () => {
 					<Scene
 						title="Events"
 						key="event"
-						component={Home}
+						component={Events}
 					/>
 					<Scene
 						title="Coupons"
 						key="coupon"
-						component={Coupons}
+						component={Home}
 					/>
 				</Stack>
 				<Stack
@@ -87,21 +86,9 @@ const RouterComponent = () => {
 						initial
 					/>
 				</Stack>
-				<Stack
-					key="coupon_view"
-					type="reset"
-					navigationBarStyle={style.navBarStyle}
-					titleStyle={style.titleStyle}
-					>
-					<Scene
-						title="Coupon"
-						key="coupon_detail"
-						component={CouponPage}
-						initial
-					/>
-				</Stack>
+				
 
-
+				
 			</Stack>
 		</Router>
 	);

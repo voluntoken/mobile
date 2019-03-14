@@ -10,8 +10,8 @@ import { Card, ListItem, Button, Icon } from 'react-native-elements'
 
 
 
-class Coupons extends Component {
-
+class Events extends Component {
+	
 	constructor() {
 		super();
 		this.state = {
@@ -19,56 +19,46 @@ class Coupons extends Component {
 			loading: true
 		};
 	}
-
+	
 	componentDidMount () {
-
+			
 		const url = 'https://jsonplaceholder.typicode.com/users';
-
+			
 		// in axios access data with .data
 		axios.get(url)
 			.then(response => {
-				console.log(response.data)
+//				console.log(response.data)
 				this.setState({
 					data: response.data,
 					loading: false
 				});
-				console.log("good :?")
+				console.log("got data")
 			})
 			.catch(error => {
-				console.log("OH BOY SAD!!")
+				console.log("no data")
 				console.log(error);
 			});
 	}
-
-
-	//	<button onClick={goToDetail}>
-	//		<Text> More </Text>
-	//	</button>
-
-	goToCoupon () {
-		Actions.coupon_view({obj: "DFas"});
-	}
-
+	
+	
+		
 	render () {
 		let content;
-//		const goToDetail = (user) => Actions.coupon_detail({obj: user});
-
-
-
+		
 		if (this.state.loading) {
 			return (
 				<View>
 					<ActivityIndicator size="large" color="#0000ff" />
 				</View>
 			);
-
-		} else {
+			
+		} else { 
 			content = this.state.data.map((user, index) => {
 				return (
 					<Card key={index}>
 						<View>
 							<Text> {user.name}: {user.email} </Text>
-								<Button onPress={this.goToCoupon}>
+								<Button onPress={() => Actions.detail_view({ obj: user})}>
 									<Text> More </Text>
 								</Button>
 						</View>
@@ -83,9 +73,10 @@ class Coupons extends Component {
 			</ScrollView>
 		);
 	}
-
-
+	
+	
 }
 
 
-export default Coupons;
+export default Events;
+
