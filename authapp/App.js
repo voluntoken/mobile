@@ -3,7 +3,7 @@
 import React, { Component } from 'react';
 import Router from './src/Router';
 import axios from 'axios';
-
+import SmoothPinCodeInput from 'react-native-smooth-pincode-input'
 
 export default class App extends Component {
   render() {

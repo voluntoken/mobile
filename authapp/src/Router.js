@@ -5,10 +5,17 @@ import { Scene, Stack, Router, Actions } from 'react-native-router-flux';
 import Login from './components/Login';
 import Register from './components/Register';
 import Home from './components/Home';
-import Events from './components/Events';
-import DetailPage from './components/DetailPage'
 
+import NGO from './components/NGO';
+import Business from './components/Business';
 
+import Events from './components/Events'
+import Coupons from './components/Coupons'
+
+import SingleEventDetail from './components/SingleEventDetail'
+import SingleCouponDetail from './components/SingleCouponDetail'
+
+import CheckInOutDetail from './components/CheckInOutDetail'
 
 
 import { StyleSheet, StatusBar } from 'react-native';
@@ -54,46 +61,89 @@ const RouterComponent = () => {
 					type="reset"
 					navigationBarStyle={style.navBarStyle}
 					titleStyle={style.titleStyle}
+					>
 					
-					>
-					<Scene
-						title="Home"
-						key="home"
-						component={Home}
-						initial
-					/>
-					<Scene
-						title="Events"
-						key="event"
-						component={Events}
-					/>
-					<Scene
-						title="Coupons"
-						key="coupon"
-						component={Home}
-					/>
+					<Stack
+					
+						key="Home"
+						type="reset"
+						navigationBarStyle={style.navBarStyle}
+						titleStyle={style.titleStyle}
+						>
+						<Scene
+							title="Home"
+							key="home"
+							component={Home}
+							onEnter={this.onEnterHome}
+							initial
+						/>
+						<Scene
+							title="See Events"
+							key="check_in_out_detail"
+							component={CheckInOutDetail}
+						/>
+					</Stack>
+					
+
+					
+					<Stack
+						key="NGO"
+						type="reset"
+						navigationBarStyle={style.navBarStyle}
+						titleStyle={style.titleStyle}
+						>
+						<Scene
+							title="NGOs"
+							key="ngo"
+							component={NGO}
+							initial
+						/>
+						<Scene
+							title="See Events"
+							key="events"
+							component={Events}
+						/>
+						<Scene
+							title="Event"
+							key="single_event_detail"
+							component={SingleEventDetail}
+						/>
+					</Stack>
+					
+					<Stack
+						key="Business"
+						type="reset"
+						navigationBarStyle={style.navBarStyle}
+						titleStyle={style.titleStyle}
+						>
+						<Scene
+							title="Businesses"
+							key="business"
+							component={Business}
+							initial
+						/>
+						
+						<Scene
+							title="See Coupons"
+							key="coupons"
+							component={Coupons}
+						/>
+						<Scene
+							title="Coupon"
+							key="single_coupon_detail"
+							component={SingleCouponDetail}
+						/>
+					</Stack>
+
+
+					
 				</Stack>
-				<Stack
-					key="detail_view"
-					type="reset"
-					navigationBarStyle={style.navBarStyle}
-					titleStyle={style.titleStyle}
-					>
-					<Scene
-						title="Event"
-						key="event_detail"
-						component={DetailPage}
-						initial
-					/>
-				</Stack>
-				
 
 				
 			</Stack>
 		</Router>
 	);
 };
-
 
 
 

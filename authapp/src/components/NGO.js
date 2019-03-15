@@ -1,3 +1,5 @@
+// src/components/Home.js
+
 import React, { Component } from 'react';
 import { View, Text, ActivityIndicator, ScrollView } from 'react-native';
 import axios from 'axios';
@@ -6,8 +8,10 @@ import { Card, ListItem, Button, Icon } from 'react-native-elements'
  import { Actions } from 'react-native-router-flux';
 
 
-class Events extends Component {
 
+
+class NGO extends Component {
+	
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -19,7 +23,7 @@ class Events extends Component {
 	componentDidMount () {
 			
 		axios
-			.get(`/get_all_ngo_event/`+this.props.obj.id)
+			.get(`/get_all_ngo/`)
 			.then(response => {
 				console.log("Got Data...")
 				console.log(response.data)
@@ -43,26 +47,21 @@ class Events extends Component {
 		if (this.state.loading) {
 			return (
 				<View>
-					<Text> {this.props.obj.name} </Text>
-					<Button
-						onPress={this.goBack} 
-						title={"Back"}
-					/>
 					<ActivityIndicator size="large" color="#0000ff" />
 				</View>
 			);
 			
 		} else { 
-			content = this.state.data.map((event, index) => {
+			content = this.state.data.map((ngo, index) => {
 				return (
 					<Card key={index}>
 						<View>
-							<Text> {event.name}: {event.description} </Text>
-								<Button
-									onPress={() => Actions.single_event_detail({obj: event})} 
-									title={"More"}
-								/>
+							<Text> {ngo.name}: {ngo.description} </Text>
 							
+							<Button
+								onPress={() => Actions.events({ obj: ngo})} 
+								title={"More"}
+							/>
 						</View>
 					</Card>
 				);
@@ -71,21 +70,14 @@ class Events extends Component {
 
 		return (
 			<ScrollView>
-			<Text> {this.props.obj.name} </Text>
-			{content}
-
+				{content}
 			</ScrollView>
 		);
 	}
 	
-//	<Button
-//		onPress={this.goBack} 
-//		title={"Back"}
-//	/>
 	
-	goBack () {
-		Actions.pop();
-	} 		
 }
 
-export default Events;
+
+export default NGO;
+
