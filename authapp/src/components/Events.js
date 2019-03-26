@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, ActivityIndicator, ScrollView } from 'react-native';
+import { View, Text, ActivityIndicator, ScrollView, StyleSheet } from 'react-native';
 import axios from 'axios';
 import { Card, ListItem, Button, Icon } from 'react-native-elements'
 
@@ -44,10 +44,6 @@ class Events extends Component {
 			return (
 				<View>
 					<Text> {this.props.obj.name} </Text>
-					<Button
-						onPress={this.goBack} 
-						title={"Back"}
-					/>
 					<ActivityIndicator size="large" color="#0000ff" />
 				</View>
 			);
@@ -71,8 +67,11 @@ class Events extends Component {
 
 		return (
 			<ScrollView>
-			<Text> {this.props.obj.name} </Text>
-			{content}
+				<View style={style.small_space}>
+				</View>
+				
+				<Text  style={style.titleText}> {this.props.obj.name} </Text>
+				{content}
 
 			</ScrollView>
 		);
@@ -87,5 +86,22 @@ class Events extends Component {
 		Actions.pop();
 	} 		
 }
+
+const style = StyleSheet.create({
+	titleText: {
+		fontSize: 20,
+		fontWeight: 'bold',
+	},
+	textInputStyle: {
+		padding: 10
+	},
+	small_space:{
+		paddingTop:30,
+	},
+	big_space:{
+		paddingTop:100,
+	},
+
+});
 
 export default Events;

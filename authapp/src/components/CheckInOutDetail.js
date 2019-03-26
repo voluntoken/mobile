@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Modal, TouchableHighlight, Alert, View, Text, ActivityIndicator, ScrollView } from 'react-native';
+import { Modal, TouchableHighlight, Alert, View, Text, ActivityIndicator, ScrollView, StyleSheet } from 'react-native';
 import axios from 'axios';
 import {Card, ListItem, Button, Icon } from 'react-native-elements'
 
@@ -140,7 +140,11 @@ class CheckInOutDetail extends Component {
 				}}>
 				<View style={{marginTop: 60}}>
 					<View>
-						<Text>Please Enter Pin</Text>
+						<View style={style.small_space}>
+						</View>
+
+						<Text style={style.titleText}>Show to NGO </Text>
+						<Text style={style.titleText}>Please Enter Pin</Text>
 						
 						<SmoothPinCodeInput
 							ref={this.pinInput}
@@ -150,25 +154,29 @@ class CheckInOutDetail extends Component {
 							onBackspace={this._focusePrevInput}
 							/>
 							
-							<TouchableHighlight
+							<View style={style.small_space}>
+							</View>
+							
+							<Button
+								title="Cancel"
 								onPress={() => {
 									this.setModalVisible(!this.state.modalVisible);
-								}}>
-								<Text>Cancel</Text>
-							</TouchableHighlight>
+								}}/>
+	
 							
 							
 					</View>
 				</View>
 			</Modal>
 
-
-			<Text> {this.props.obj.name} </Text>
-			<Text>			
-				{new Intl.DateTimeFormat('en-GB', { 
+			<View style={style.small_space}>
+			</View>
+			<Text style={style.titleText}> {this.props.obj.name} </Text>
+			<Text >			
+				{new Intl.DateTimeFormat('en-US', { 
 					year: 'numeric', 
-					month: 'long', 
 					day: '2-digit', 
+					month: 'long', 
 					hour:'2-digit',
 					minute: '2-digit',
 				}).format(new Date(this.props.obj.start_time))}	
@@ -176,8 +184,8 @@ class CheckInOutDetail extends Component {
 			<Text>			
 				{new Intl.DateTimeFormat('en-GB', { 
 					year: 'numeric', 
+					day: '2-digit',
 					month: 'long', 
-					day: '2-digit', 
 					hour:'2-digit',
 					minute: '2-digit',
 				}).format(new Date(this.props.obj.end_time))}	
@@ -210,5 +218,20 @@ class CheckInOutDetail extends Component {
 		Actions.pop();	
 	} 		
 }
+const style = StyleSheet.create({
+	titleText: {
+		fontSize: 20,
+		fontWeight: 'bold',
+	},
+	textInputStyle: {
+		padding: 10
+	},
+	small_space:{
+		paddingTop:30,
+	},
+	big_space:{
+		paddingTop:100,
+	},
 
+});
 export default CheckInOutDetail;

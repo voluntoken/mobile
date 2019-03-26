@@ -8,6 +8,7 @@ import Home from './components/Home';
 
 import NGO from './components/NGO';
 import Business from './components/Business';
+import Settings from './components/settings';
 
 import Events from './components/Events'
 import Coupons from './components/Coupons'
@@ -19,7 +20,7 @@ import CheckInOutDetail from './components/CheckInOutDetail'
 
 
 import { StyleSheet, StatusBar } from 'react-native';
-
+import { Card, ListItem, Button, Icon } from 'react-native-elements'
 
 const style = StyleSheet.create({
 	navBarStyle: {
@@ -32,15 +33,38 @@ const style = StyleSheet.create({
 });
 
 
+const home_icon = () => (
+	  <Icon
+		name='home' />
+)
+const ngo_icon = () => (
+	  <Icon
+		name='people' />
+)
+
+const business_icon = () => (
+	  <Icon
+		name='shopping-cart' />
+)
+
+const setting_icon = () => (
+	  <Icon
+		name='settings' />
+)
+
+
+
 const RouterComponent = () => {
 	return (
 		<Router>
-			<Stack hideNavBar key="root">
+			<Stack hideNavBar key="root" backTitle= " ">
+			
 				<Stack
 					key="auth"
 					type="reset"
 					navigationBarStyle={style.navBarStyle}
 					titleStyle={style.titleStyle}
+					
 					>
 					<Scene
 						title="Sign In"
@@ -66,6 +90,7 @@ const RouterComponent = () => {
 					<Stack
 					
 						key="Home"
+						icon={home_icon}
 						type="reset"
 						navigationBarStyle={style.navBarStyle}
 						titleStyle={style.titleStyle}
@@ -78,7 +103,7 @@ const RouterComponent = () => {
 							initial
 						/>
 						<Scene
-							title="See Events"
+							title="Check In/Out"
 							key="check_in_out_detail"
 							component={CheckInOutDetail}
 						/>
@@ -89,6 +114,7 @@ const RouterComponent = () => {
 					<Stack
 						key="NGO"
 						type="reset"
+						icon={ngo_icon}
 						navigationBarStyle={style.navBarStyle}
 						titleStyle={style.titleStyle}
 						>
@@ -113,6 +139,7 @@ const RouterComponent = () => {
 					<Stack
 						key="Business"
 						type="reset"
+						icon={business_icon}
 						navigationBarStyle={style.navBarStyle}
 						titleStyle={style.titleStyle}
 						>
@@ -134,6 +161,22 @@ const RouterComponent = () => {
 							component={SingleCouponDetail}
 						/>
 					</Stack>
+					<Stack
+						key="Settings"
+						type="reset"
+						icon={setting_icon}
+						navigationBarStyle={style.navBarStyle}
+						titleStyle={style.titleStyle}
+						>
+						<Scene
+							title="Settings"
+							key="settings"
+							component={Settings}
+							initial
+						/>
+					</Stack>
+					
+					
 
 
 					

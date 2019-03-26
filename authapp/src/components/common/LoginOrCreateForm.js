@@ -1,10 +1,12 @@
  // src/components/common/LoginOrCreateForm.js
 
 import React, { Component } from 'react';
-import { Button, View, Text, TextInput, StyleSheet, Switch } from 'react-native';
+import { Alert, View, Text, TextInput, StyleSheet, Switch } from 'react-native';
+
+import { Card, ListItem, Button, Icon } from 'react-native-elements'
 import { Actions } from 'react-native-router-flux';
 import axios from 'axios';
-import {AsyncStorage, ActivityIndicator} from 'react-native';
+import {AsyncStorage, ActivityIndicator, ScrollView} from 'react-native';
 
 
 class LoginOrCreateForm extends Component {
@@ -33,6 +35,11 @@ class LoginOrCreateForm extends Component {
 		isPublic: false, 
 		isDiscount: false, 
 		loading: true,
+		email: '',
+	}
+	
+	onEmailChange(text) {
+		this.setState({ email: text });
 	}
 
 	onUsernameChange(text) {
@@ -62,12 +69,14 @@ class LoginOrCreateForm extends Component {
 		const { fieldStyle, textInputStyle } = style;
 		if (this.props.create) {
 			return (
-					<View style={fieldStyle}>
+				<View>
+					<View >
 						<TextInput
 							placeholder="First name"
 							autoCorrect={false}
-							onChangeText={this.onFirstNameChange.bind(this)}
 							style={textInputStyle}
+							onChangeText={this.onFirstNameChange.bind(this)}
+				
 						/>
 						
 						<TextInput
@@ -75,35 +84,37 @@ class LoginOrCreateForm extends Component {
 							autoCorrect={false}
 							onChangeText={this.onLastNameChange.bind(this)}
 							style={textInputStyle}
+					
 						/>
 						
-						
+						<TextInput
+							placeholder="Email"
+							value={this.state.email}
+							autoCorrect={false}
+							autoCapitalize="none"
+							style={textInputStyle}
+							onChangeText={this.onEmailChange.bind(this)}
+						/>
+					</View>	
+					
+					<View>
 						<Text> Let other users see you?</Text>
 						<Switch
-								style={{marginTop:30}}
 								onValueChange = {this.toggleSwitch_public}
 								value = {this.state.isPublic}
 						/>
-						
-						
+					</View>
+					<View>
 						<Text> Receive Discounts? </Text>
 						<Switch
-								style={{marginTop:30}}
 								onValueChange = {this.toggleSwitch_discount}
 								value = {this.state.isDiscount}
 						/>
-						
 					</View>
+				</View>
+				
 			);
 		}
-	}
-
-	renderButton() {
-		const buttonText = this.props.create ? 'Create' : 'Login';
-
-		return (
-			<Button title={buttonText} onPress={this.handleRequest.bind(this)}/>
-		);
 	}
 
 
@@ -111,12 +122,7 @@ class LoginOrCreateForm extends Component {
 		if (!this.props.create) {
 			const { accountCreateTextStyle } = style;
 			return (
-				<Text style={accountCreateTextStyle}>
-					Or 
-					<Text style={{ color: 'blue' }} onPress={() => Actions.register()}>
-						{' Sign-up'}
-					</Text>
-				</Text>
+				<Button title="Sign Up" onPress={() => Actions.register()}/>
 			);
 		}
 	}
@@ -142,39 +148,54 @@ class LoginOrCreateForm extends Component {
 			} = style;
 
 			return (
-				<View style={{ flex: 1, backgroundColor: 'white' }}>
-					<View style={formContainerStyle}>
-						<View style={fieldStyle}>
-							<TextInput
-								placeholder="username"
-								autoCorrect={false}
-								autoCapitalize="none"
-								onChangeText={this.onUsernameChange.bind(this)}
-								style={textInputStyle}
-							/>
+				<ScrollView style={{backgroundColor: 'white',}}>
+						<View style={{ flex: 1, backgroundColor: 'white' }}>
+							<View style={formContainerStyle}>
+							
+								<View style={style.small_space}>
+								</View>
+							
+								<View>
+									<Text style={style.titleText}> Welcome to Voluntoken! </Text>
+								</View>
+			
+								<View style={fieldStyle}>
+									<TextInput
+										placeholder="username"
+										autoCorrect={false}
+										autoCapitalize="none"
+										onChangeText={this.onUsernameChange.bind(this)}
+										style={textInputStyle}
+									/>
+								</View>
+								<View style={fieldStyle}>
+									<TextInput
+										secureTextEntry
+										autoCapitalize="none"
+										autoCorrect={false}
+										placeholder="password"
+										onChangeText={this.onPasswordChange.bind(this)}
+										style={textInputStyle}
+									/>
+								</View>
+								{this.renderCreateForm()}
+							</View>
+							
+							<View style={style.small_space}>
+							</View>
+							
+							<View style={buttonContainerStyle}>
+								{this.renderButton()}
+								{this.renderCreateLink()}
+				
+							</View>
 						</View>
-						<View style={fieldStyle}>
-							<TextInput
-								secureTextEntry
-								autoCapitalize="none"
-								autoCorrect={false}
-								placeholder="password"
-								onChangeText={this.onPasswordChange.bind(this)}
-								style={textInputStyle}
-							/>
-						</View>
-						{this.renderCreateForm()}
-					</View>
-					<View style={buttonContainerStyle}>
-						{this.renderButton()}
-						<View style={accountCreateContainerStyle}>
-							{this.renderCreateLink()}
-						</View>
-					</View>
-				</View>
+				</ScrollView>
 			);
 		}
 	}
+	
+	
 	
 	handleRequest() {
 		
@@ -185,6 +206,7 @@ class LoginOrCreateForm extends Component {
 		const payload = { username: this.state.username, password: this.state.password } 
 				
 		if (this.props.create) {
+			payload.email = this.state.email
 			payload.first_name = this.state.firstName;
 			payload.last_name = this.state.lastName;
 			payload.is_public = this.state.isPublic;
@@ -212,15 +234,22 @@ class LoginOrCreateForm extends Component {
 				// Navigate to the home screen
 				Actions.main();
 			})
-			.catch(error => console.log(error));
+			.catch(error => {
+				
+				Alert.alert("Error Logging in")
+				console.log(error)
+				console.log(error.response.data)
+			
+			
+			});
 			
 	}
 
 	renderButton() {
-			const buttonText = this.props.create ? 'Create' : 'Login';
+			const buttonText = this.props.create ? 'Sign Up' : 'Login';
 
 			return (
-				<Button title={buttonText} onPress={this.handleRequest.bind(this)}/>
+				<Button title={buttonText} type="outline" onPress={this.handleRequest.bind(this)}/>
 			);
 		}
 		
@@ -228,16 +257,25 @@ class LoginOrCreateForm extends Component {
 
 
 const style = StyleSheet.create({
+	titleText: {
+		fontSize: 20,
+		fontWeight: 'bold',
+	},
 //	formContainerStyle: {
 //		flex: 1,
 //		flexDirection: 'column',
 //		alignItems: 'center',
 //		justifyContent: 'center',
 //	},
-//	textInputStyle: {
-//		flex: 1,
-//		padding: 15
-//	},
+	textInputStyle: {
+		padding: 10
+	},
+	small_space:{
+		paddingTop:30,
+	},
+	big_space:{
+		paddingTop:100,
+	},
 //	fieldStyle: {
 //		flexDirection: 'row',
 //		justifyContent: 'center'

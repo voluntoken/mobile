@@ -1,7 +1,7 @@
 // src/components/Home.js
 
 import React, { Component } from 'react';
-import { Alert, View, Text, ActivityIndicator, ScrollView, RefreshControl } from 'react-native';
+import { Alert, View, Text, ActivityIndicator, ScrollView, RefreshControl, StyleSheet } from 'react-native';
 import axios from 'axios';
 import { Card, ListItem, Button, Icon } from 'react-native-elements'
 
@@ -110,12 +110,14 @@ class Home extends Component {
 			);
 			
 		} else { 
+			
+			
 		
 			content = this.state.data.map((event, index) => {
 				return (
 					<Card key={index}>
 						<View>
-							<Text> {event.name}: {event.description} </Text>
+							<Text> {event.name} </Text>
 								<Button
 									onPress={() => {
 												Actions.check_in_out_detail({obj: event})
@@ -144,9 +146,13 @@ class Home extends Component {
 
 		return (
 			<ScrollView>
-				<Text> My Tokens </Text>
+				<View style={style.small_space}>
+				</View>
+				<Text  style={style.titleText}> My Tokens </Text>
 				{tokens}
-				<Text> My Events </Text>
+				<View style={style.small_space}>
+				</View>
+				<Text  style={style.titleText}> My Events </Text>
 				{content}
 				<RefreshControl
 					refreshing={this.state.loading}
@@ -196,7 +202,51 @@ class Home extends Component {
 		
 	}
 	
+	
+
+	
 }
+
+
+const style = StyleSheet.create({
+	titleText: {
+		fontSize: 20,
+		fontWeight: 'bold',
+	},
+//	formContainerStyle: {
+//		flex: 1,
+//		flexDirection: 'column',
+//		alignItems: 'center',
+//		justifyContent: 'center',
+//	},
+	textInputStyle: {
+		padding: 10
+	},
+	small_space:{
+		paddingTop:30,
+	},
+	big_space:{
+		paddingTop:100,
+	},
+//	fieldStyle: {
+//		flexDirection: 'row',
+//		justifyContent: 'center'
+//	},
+//	buttonContainerStyle: {
+//		flex: 1,
+//		justifyContent: 'center',
+//		padding: 25
+//	},
+//	accountCreateTextStyle: {
+//		color: 'black'
+//	},
+//	accountCreateContainerStyle: {
+//		padding: 25,
+//		alignItems: 'center'
+//	}
+});
+
+
 
 
 export default Home;
